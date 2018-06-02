@@ -2,6 +2,8 @@ extends: airbnb-base
 env:
   es6: true
   node: true
+  mocha: true
 rules:
+  no-unused-expressions: 0
   no-await-in-loop: 0
   consistent-return: 0

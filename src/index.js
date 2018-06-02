@@ -2,9 +2,9 @@ const axios = require('axios');
 
 
 class Jenkins {
-  constructor(id, token, customHeaders = {}) {
+  constructor(id, token, path, customHeaders = {}) {
     this.token = token;
-    this.baseUrl = `http://${id}:${token}@jenkins.pimpam.io:19080`;
+    this.baseUrl = `http://${id}:${token}@${path}`;
     this.urlParams = { token };
     this.headers = Object.assign({}, { Authorization: this.urlParams.token }, customHeaders);
     this.crumb = null;

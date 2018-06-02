@@ -14,12 +14,13 @@ __Options__
 
 * __jenkinsId__: _`String`_ usually the email you use to log into your jenkins.
 * __jenkinsToken:__ _`String`_ you can find it in your jenkins personal area.
+* __jenkinsPath__: _`String`_ the url you use to acces to your jenkins.
 * __customHeaders:__ _`Object`_ with custom headers to be sended in every request (don't worry about the _'Authorization'_ or _crumb_ headers, __node-jenkins__ do it for you ).
 
 ```js
 import Jenkins from 'node-jenkins';
 
-const jenkins = new Jenkins(jenkinsId, jenkinsToken, [customHeaders]);
+const jenkins = new Jenkins(jenkinsId, jenkinsToken, jenkinsPath, [customHeaders]);
 ```
 
 
