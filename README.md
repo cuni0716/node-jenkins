@@ -26,3 +26,6 @@ Retrieve server information.
 ```js
 const info = await jenkins.info();
 ```
+
+
+## So much more comming soon...
