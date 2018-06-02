@@ -1,4 +1,7 @@
 {
+    "presets": [
+        "minify"
+    ],
     "plugins": [
         "transform-async-to-generator"
     ]

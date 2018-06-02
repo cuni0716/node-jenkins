@@ -1,12 +1,12 @@
 {
   "name": "node-jenkins",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Easy to use jenkins client",
   "main": "lib/index.js",
   "scripts": {
     "lint": "eslint src/**/*.js",
     "babel": "babel src/index.js -o lib/index.js",
-    "prepublish-disabled": "npm run lint && npm run babel"
+    "prepublish": "npm run lint && npm run babel"
   },
   "repository": {
     "type": "git",
@@ -29,6 +29,7 @@
     "babel-plugin-transform-async-to-generator": "^6.24.1",
     "babel-plugin-uglify": "^1.0.2",
     "babel-preset-es2015": "^6.24.1",
+    "babel-preset-minify": "^0.4.3",
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.12.0"
