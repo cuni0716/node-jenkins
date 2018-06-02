@@ -4,3 +4,4 @@ env:
   node: true
 rules:
   no-await-in-loop: 0
+  consistent-return: 0
