@@ -1,6 +1,10 @@
 # node-jenkins
 
-![License][license-image] ![Issues][issues-image] ![Vulnerabilities][vul-image] ![Dependencies][deps-image]
+[![Version][npm-image]][npm-url]
+![License][license-image]
+![Issues][issues-image]
+![Vulnerabilities][vul-image]
+![Dependencies][deps-image]
 
 ### Usage
 
@@ -34,3 +38,5 @@ const info = await jenkins.info();
 [issues-image]: https://img.shields.io/github/issues/cuni0716/node-jenkins.svg
 [deps-image]: https://david-dm.org/cuni0716/node-jenkins.svg
 [vul-image]: https://snyk.io/test/github/cuni0716/node-jenkins.git/badge.svg
+[npm-image]: https://img.shields.io/npm/v/node-jenkins.svg
+[npm-url]: https://npmjs.org/package/node-jenkins
