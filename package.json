@@ -1,6 +1,6 @@
 {
   "name": "node-jenkins",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Easy to use jenkins client",
   "main": "lib/index.js",
   "scripts": {
@@ -18,7 +18,7 @@
     "cli"
   ],
   "author": "Ramon Cuni <mail@ramoncuni.com>",
-  "license": "LGPL-3.0",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/cuni0716/node-jenkins/issues"
   },
