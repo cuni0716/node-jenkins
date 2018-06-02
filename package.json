@@ -1,6 +1,6 @@
 {
   "name": "node-jenkins",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Easy to use jenkins client",
   "main": "lib/index.min.js",
   "scripts": {
