@@ -1,5 +1,6 @@
 # node-jenkins
 
+![Travis][travis-image]
 [![Version][npm-image]][npm-url]
 ![License][license-image]
 ![Issues][issues-image]
@@ -35,6 +36,7 @@ const info = await jenkins.info();
 
 ## So much more comming soon...
 
+[travis-image]: https://travis-ci.org/cuni0716/node-jenkins.svg?branch=master
 [license-image]: https://img.shields.io/npm/l/node-jenkins.svg
 [issues-image]: https://img.shields.io/github/issues/cuni0716/node-jenkins.svg
 [deps-image]: https://david-dm.org/cuni0716/node-jenkins.svg
