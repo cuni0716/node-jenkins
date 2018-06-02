@@ -2,7 +2,7 @@
   "name": "node-jenkins",
   "version": "0.1.1",
   "description": "Easy to use jenkins client",
-  "main": "lib/index.min.js",
+  "main": "lib/index.js",
   "scripts": {
     "lint": "eslint src/**/*.js",
     "babel": "babel src/index.js -o lib/index.js",
