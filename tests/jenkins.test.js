@@ -49,48 +49,61 @@ describe('Jenkins', () => {
       expect(jenkins.crumb).to.be.null;
     });
   });
-  describe('getCrumb method', () => {
-    afterEach(() => nock.cleanAll());
-    it('should work with correct data', (done) => {
-      const jenkins = new Jenkins(jenkinsId, jenkinsToken, jenkinsPath);
-      nock(jenkins.baseUrl).get('/crumbIssuer/api/json').reply(200, crumbIssuerResponseOk);
-      jenkins.getCrumb().then((crumb) => {
-        expect(crumb).to.be.an('object');
-        expect(crumb).to.have.all.keys(Object.keys(crumbIssuerResponseOk));
-        expect(jenkins.crumb).to.be.an('object');
-        expect(jenkins.crumb).to.have.all.keys(Object.keys(crumbIssuerResponseOk));
-        done();
+  describe('private methods', () => {
+    describe('_getCrumb method', () => {
+      afterEach(() => nock.cleanAll());
+      it('should work with correct data', (done) => {
+        const jenkins = new Jenkins(jenkinsId, jenkinsToken, jenkinsPath);
+        nock(jenkins.baseUrl).get('/crumbIssuer/api/json').reply(200, crumbIssuerResponseOk);
+        jenkins._getCrumb().then((crumb) => {
+          expect(crumb).to.be.an('object');
+          expect(crumb).to.have.all.keys(Object.keys(crumbIssuerResponseOk));
+          expect(jenkins.crumb).to.be.an('object');
+          expect(jenkins.crumb).to.have.all.keys(Object.keys(crumbIssuerResponseOk));
+          done();
+        });
+      });
+      it('shouldn\'t throw if API response is not ok', (done) => {
+        const jenkins = new Jenkins(jenkinsId, jenkinsToken, jenkinsPath);
+        nock(jenkins.baseUrl).get('/crumbIssuer/api/json').replyWithError(crumbIssuerResponseKo);
+        jenkins._getCrumb().then((crumb) => {
+          expect(crumb).to.be.a('string');
+          expect(crumb).to.equal(crumbIssuerResponseKo.statusText);
+          done();
+        });
       });
     });
-    it('shouldn\'t throw if API response is not ok', (done) => {
-      const jenkins = new Jenkins(jenkinsId, jenkinsToken, jenkinsPath);
-      nock(jenkins.baseUrl).get('/crumbIssuer/api/json').replyWithError(crumbIssuerResponseKo);
-      jenkins.getCrumb().then((crumb) => {
-        expect(crumb).to.be.a('string');
-        expect(crumb).to.equal(crumbIssuerResponseKo.statusText);
-        done();
-      });
-    });
-  });
-  describe('info method', () => {
-    afterEach(() => nock.cleanAll());
-    it('should work correctly', (done) => {
-      const jenkins = new Jenkins(jenkinsId, jenkinsToken, jenkinsPath);
-      nock(jenkins.baseUrl).get('/crumbIssuer/api/json').reply(200, crumbIssuerResponseOk);
-      nock(jenkins.baseUrl).get('/api/json').reply(200, infoResponseOk);
-      jenkins.info().then((info) => {
-        expect(info).to.be.an('object');
-        expect(info).to.deep.equal(infoResponseOk);
-        done();
-      });
+    describe('_getRequest method', () => {
+      it('should works correctly');
     });
   });
-  describe('toString method', () => {
-    it('should return correct string', () => {
-      const jenkins = new Jenkins(jenkinsId, jenkinsToken, jenkinsPath);
-      const jenkinsStr = jenkins.toString();
-      expect(jenkinsStr).to.be.a('string');
-      expect(jenkinsStr).to.equal(`<Jenkins ${jenkinsToken}>`);
+  describe('public methods', () => {
+    describe('info method', () => {
+      afterEach(() => nock.cleanAll());
+      it('should work correctly', (done) => {
+        const jenkins = new Jenkins(jenkinsId, jenkinsToken, jenkinsPath);
+        nock(jenkins.baseUrl).get('/crumbIssuer/api/json').reply(200, crumbIssuerResponseOk);
+        nock(jenkins.baseUrl).get('/api/json?token=jenkins-token').reply(200, infoResponseOk);
+        jenkins.info().then((info) => {
+          expect(info).to.be.an('object');
+          expect(info).to.deep.equal(infoResponseOk);
+          done();
+        });
+      });
+    });
+    describe('getJobInfo method', () => {
+      it('should work correctly');
+    });
+    describe('getBuildInfo method', () => {
+      it('should work correctly');
+    });
+    describe('toString method', () => {
+      it('should return correct string', () => {
+        const jenkins = new Jenkins(jenkinsId, jenkinsToken, jenkinsPath);
+        const jenkinsStr = jenkins.toString();
+        expect(jenkinsStr).to.be.a('string');
+        expect(jenkinsStr).to.equal(`<Jenkins ${jenkinsToken}>`);
+      });
     });
   });
 });

@@ -16,7 +16,7 @@ __Options__
 * __jenkinsId__: _`String`_ usually the email you use to log into your jenkins.
 * __jenkinsToken:__ _`String`_ you can find it in your jenkins personal area.
 * __jenkinsPath__: _`String`_ the url you use to acces to your jenkins.
-* __customHeaders:__ _`Object`_ with custom headers to be sended in every request (don't worry about the _'Authorization'_ or _crumb_ headers, __node-jenkins__ do it for you ).
+* __customHeaders:__ _`Object`_ with custom headers to be sended in every request (don't worry about the _'Authorization'_ or _'crumb'_ headers, __node-jenkins__ do it for you :wink: ).
 
 ```js
 import Jenkins from 'node-jenkins';
@@ -34,7 +34,36 @@ const info = await jenkins.info();
 ```
 
 
+#### Jobs
+
+__Retrieve job information__
+
+* __jobName__: _`String`_ job full name (e.g. 'Testing/Frontal/acceptance')
+
+```js
+const info = await jenkins.getJobInfo(jobName);
+```
+
+
+#### Builds
+
+__Retrieve build information__
+
+* __jobName__: _`String`_ job full name (e.g. 'Testing/Frontal/acceptance')
+* __jobId__: _`Number`_ build id (e.g. 86)
+
+```js
+const info = await jenkins.getBuildInfo(jobName, jobId);
+```
+
+
 ## So much more comming soon...
+
+
+#### License
+
+This work is licensed under the MIT License (see the LICENSE file).
+
 
 [travis-image]: https://travis-ci.org/cuni0716/node-jenkins.svg?branch=master
 [license-image]: https://img.shields.io/npm/l/node-jenkins.svg
