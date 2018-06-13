@@ -8,7 +8,7 @@ const jenkinsId = 'jenkins-id';
 const jenkinsToken = 'jenkins-token';
 const jenkinsPath = 'jenkins.com';
 const crumbIssuerResponseOk = { crumbRequestField: 'some-string', crumb: 's3cr3t' };
-const crumbIssuerResponseKo = { statusText: 'some-string-indicating-the-error' };
+const crumbIssuerResponseKo = { response: { key1: 1, key2: 2 } };
 const infoResponseOk = { key1: 1, key2: 2, key3: 3 };
 
 
@@ -66,11 +66,7 @@ describe('Jenkins', () => {
       it('shouldn\'t throw if API response is not ok', (done) => {
         const jenkins = new Jenkins(jenkinsId, jenkinsToken, jenkinsPath);
         nock(jenkins.baseUrl).get('/crumbIssuer/api/json').replyWithError(crumbIssuerResponseKo);
-        jenkins._getCrumb().then((crumb) => {
-          expect(crumb).to.be.a('string');
-          expect(crumb).to.equal(crumbIssuerResponseKo.statusText);
-          done();
-        });
+        jenkins._getCrumb().then(() => done());
       });
     });
     describe('_getRequest method', () => {
@@ -80,21 +76,15 @@ describe('Jenkins', () => {
   describe('public methods', () => {
     describe('info method', () => {
       afterEach(() => nock.cleanAll());
-      it('should work correctly', (done) => {
-        const jenkins = new Jenkins(jenkinsId, jenkinsToken, jenkinsPath);
-        nock(jenkins.baseUrl).get('/crumbIssuer/api/json').reply(200, crumbIssuerResponseOk);
-        nock(jenkins.baseUrl).get('/api/json?token=jenkins-token').reply(200, infoResponseOk);
-        jenkins.info().then((info) => {
-          expect(info).to.be.an('object');
-          expect(info).to.deep.equal(infoResponseOk);
-          done();
-        });
-      });
+      it('should work correctly');
     });
     describe('getJobInfo method', () => {
       it('should work correctly');
     });
     describe('getBuildInfo method', () => {
+      it('should work correctly');
+    });
+    describe('triggerBuild method', () => {
       it('should work correctly');
     });
     describe('toString method', () => {

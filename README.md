@@ -1,15 +1,15 @@
 # node-jenkins
 
-![Travis][travis-image]
+[![Travis][travis-image]][travis-url]
 [![Version][npm-image]][npm-url]
 ![License][license-image]
 ![Issues][issues-image]
-![Vulnerabilities][vul-image]
+[![Vulnerabilities][vul-image]][vul-url]
 [![Dependencies][deps-image]][deps-url]
 
-### Usage
+## Usage
 
-#### Create an instance
+### Create an instance
 
 __Options__
 
@@ -25,7 +25,7 @@ const jenkins = new Jenkins(jenkinsId, jenkinsToken, jenkinsPath, [customHeaders
 ```
 
 
-#### Info
+### Info
 
 __Retrieve server information.__
 
@@ -34,42 +34,53 @@ const info = await jenkins.info();
 ```
 
 
-#### Jobs
+### Jobs
 
 __Retrieve job information__
 
-* __jobName__: _`String`_ job full name (e.g. 'Testing/Frontal/acceptance')
+* __jobName__: _`String`_ job full name _(e.g. 'Testing/Frontal/acceptance')_
 
 ```js
 const info = await jenkins.getJobInfo(jobName);
 ```
 
 
-#### Builds
+### Builds
 
 __Retrieve build information__
 
-* __jobName__: _`String`_ job full name (e.g. 'Testing/Frontal/acceptance')
-* __jobId__: _`Number`_ build id (e.g. 86)
+* __jobName__: _`String`_ job full name _(e.g. 'Testing/Frontal/acceptance')_
+* __jobId__: _`Number`_ build id _(e.g. 86)_
 
 ```js
 const info = await jenkins.getBuildInfo(jobName, jobId);
+```
+
+__Trigger build__
+
+* __jobName__: _`String`_ job full name _(e.g. 'Testing/Frontal/acceptance')_
+* __params__: _`Object`_ _default={}_ params to send to job building
+
+```js
+const build = await jenkins.triggerBuild(jobName, [params]);
 ```
 
 
 ## So much more comming soon...
 
 
-#### License
+### License
 
 This work is licensed under the MIT License (see the LICENSE file).
 
 
 [travis-image]: https://travis-ci.org/cuni0716/node-jenkins.svg?branch=master
+[travis-url]: https://travis-ci.org/cuni0716/node-jenkins
 [license-image]: https://img.shields.io/npm/l/node-jenkins.svg
 [issues-image]: https://img.shields.io/github/issues/cuni0716/node-jenkins.svg
 [deps-image]: https://david-dm.org/cuni0716/node-jenkins.svg
 [deps-url]: https://david-dm.org/cuni0716/node-jenkins
 [vul-image]: https://snyk.io/test/github/cuni0716/node-jenkins.git/badge.svg
+[vul-url]: https://snyk.io/test/github/cuni0716/node-jenkins.git
 [npm-image]: https://img.shields.io/npm/v/node-jenkins.svg
 [npm-url]: https://npmjs.org/package/node-jenkins

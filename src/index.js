@@ -1,7 +1,7 @@
 const axios = require('axios');
-const qs = require('qs');
+const qs = require('querystring');
 
-const { createJobUrl } = require('./helpers');
+const { createJobUrl, get } = require('./helpers');
 
 
 class Jenkins {
@@ -14,46 +14,38 @@ class Jenkins {
   }
 
   async info() {
-    const [url, headers] = await this._getRequest('/api/json');
-    const result = await axios.get(url, headers);
-    return result.data;
+    return get(...await this._getRequest('/api/json'));
   }
 
   async getJobInfo(job) {
-    const [url, headers] = await this._getRequest(job, true);
-    try {
-      const result = await axios.get(url, headers);
-      return result.data;
-    } catch (e) {
-      return e.statusText;
-    }
+    return get(...await this._getRequest(job, true));
   }
 
   async getBuildInfo(job, buildNumber) {
-    const [url, headers] = await this._getRequest(job, true, `/${buildNumber}`);
+    return get(...await this._getRequest(job, true, buildNumber));
+  }
+
+  async triggerBuild(job, params = {}) {
+    const [url, headers] = await this._getRequest(job, true, '/buildWithParameters');
     try {
-      const result = await axios.get(url, headers);
-      return result.data;
+      const result = await axios.post(url, params, headers);
+      return { statusText: result.statusText, status: result.status };
     } catch (e) {
-      return e.statusText;
+      return { statusText: e.response.statusText, status: e.response.status };
     }
   }
 
   async _getCrumb() {
     const url = `${this.baseUrl}/crumbIssuer/api/json`;
-    try {
-      const result = await axios.get(url, this.headers);
-      const crumb = result.data;
-      this.crumb = crumb;
-      return crumb;
-    } catch (e) {
-      return e.statusText;
-    }
+    const result = await get(url);
+    this.crumb = result;
+    return result;
   }
 
-  async _getRequest(url, isJob = false, buildNumber = '') {
+  async _getRequest(url, isJob = false, extra = '') {
     url = url.startsWith('/') ? url : `/${url}`;
-    const endpoint = `${this.baseUrl}${isJob ? `${createJobUrl(url)}${buildNumber}/api/json` : url}`;
+    if (extra.length && !extra.startsWith('/')) extra = `/${extra}`;
+    const endpoint = `${this.baseUrl}${isJob ? `${createJobUrl(url)}${extra}/api/json` : url}`;
     const crumb = this.crumb || await this._getCrumb();
     const headers = Object.assign({}, this.headers, { [crumb.crumbRequestField]: crumb.crumb });
     return [`${endpoint}?${qs.stringify(this.urlParams)}`, { headers }];
