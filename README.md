@@ -65,11 +65,11 @@ __Trigger build__
 const build = await jenkins.build(jobName, [params]);
 ```
 
-__Outout progressive console output__
+__Show progressive console output__
 
 * __jobName__: _`String`_ job full name _(e.g. 'Testing/Frontal/acceptance')_
 * __jobId__: _`Number`_ build id _(e.g. 86)_
-* __interval__: _`Number`_ _`default=100`_ interval to retrieve next output
+* __interval__: _`Number`_ _`default=100`_ interval to retrieve next output _in milliseconds_
 
 ```js
 await jenkins.progressiveText(jobName, jobId, [interval]);
