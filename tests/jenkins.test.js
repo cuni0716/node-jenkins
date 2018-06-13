@@ -84,7 +84,7 @@ describe('Jenkins', () => {
     describe('getBuildInfo method', () => {
       it('should work correctly');
     });
-    describe('triggerBuild method', () => {
+    describe('build method', () => {
       it('should work correctly');
     });
     describe('toString method', () => {

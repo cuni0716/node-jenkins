@@ -1,7 +1,8 @@
-const axios = require('axios');
 const qs = require('querystring');
 
-const { createJobUrl, get } = require('./helpers');
+const {
+  createJobUrl, sleep, get, post,
+} = require('./helpers');
 
 
 class Jenkins {
@@ -25,13 +26,22 @@ class Jenkins {
     return get(...await this._getRequest(job, true, buildNumber));
   }
 
-  async triggerBuild(job, params = {}) {
+  async build(job, params = {}) {
     const [url, headers] = await this._getRequest(job, true, '/buildWithParameters');
-    try {
-      const result = await axios.post(url, params, headers);
-      return { statusText: result.statusText, status: result.status };
-    } catch (e) {
-      return { statusText: e.response.statusText, status: e.response.status };
+    return post(url, params, headers);
+  }
+
+  async progressiveText(job, id, interval = 100) {
+    let isBuilding = true;
+    let offset = 0;
+    while (isBuilding) {
+      const [url] = await this._getRequest(job, true, `/${id}/logText/progressiveText`);
+      const result = await get(`${url}&start=${offset}`, this.headers, true);
+      const log = result.data;
+      isBuilding = result.headers['x-more-data'];
+      offset = result.headers['x-text-size'];
+      if (log) console.log(log); // eslint-disable-line
+      await sleep(interval);
     }
   }
 
@@ -43,7 +53,7 @@ class Jenkins {
   }
 
   async _getRequest(url, isJob = false, extra = '') {
-    url = url.startsWith('/') ? url : `/${url}`;
+    if (!url.startsWith('/')) url = `/${url}`;
     if (extra.length && !extra.startsWith('/')) extra = `/${extra}`;
     const endpoint = `${this.baseUrl}${isJob ? `${createJobUrl(url)}${extra}/api/json` : url}`;
     const crumb = this.crumb || await this._getCrumb();

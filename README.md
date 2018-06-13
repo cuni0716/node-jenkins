@@ -16,7 +16,7 @@ __Options__
 * __jenkinsId__: _`String`_ usually the email you use to log into your jenkins.
 * __jenkinsToken:__ _`String`_ you can find it in your jenkins personal area.
 * __jenkinsPath__: _`String`_ the url you use to acces to your jenkins.
-* __customHeaders:__ _`Object`_ with custom headers to be sended in every request (don't worry about the _'Authorization'_ or _'crumb'_ headers, __node-jenkins__ do it for you :wink: ).
+* __customHeaders:__ _`Object`_ _`default={}`_ with custom headers to be sended in every request (don't worry about the _'Authorization'_ or _'crumb'_ headers, __node-jenkins__ do it for you :wink: ).
 
 ```js
 import Jenkins from 'node-jenkins';
@@ -59,14 +59,25 @@ const info = await jenkins.getBuildInfo(jobName, jobId);
 __Trigger build__
 
 * __jobName__: _`String`_ job full name _(e.g. 'Testing/Frontal/acceptance')_
-* __params__: _`Object`_ _default={}_ params to send to job building
+* __params__: _`Object`_ _`default={}`_ params to send to job building
 
 ```js
-const build = await jenkins.triggerBuild(jobName, [params]);
+const build = await jenkins.build(jobName, [params]);
 ```
 
+__Outout progressive console output__
 
-## So much more comming soon...
+* __jobName__: _`String`_ job full name _(e.g. 'Testing/Frontal/acceptance')_
+* __jobId__: _`Number`_ build id _(e.g. 86)_
+* __interval__: _`Number`_ _`default=100`_ interval to retrieve next output
+
+```js
+await jenkins.progressiveText(jobName, jobId, [interval]);
+```
+
+### Note that in all examples i use `async`/`await`, you can use `.then` instead
+
+## More functions comming soon
 
 
 ### License

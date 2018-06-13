@@ -5,9 +5,10 @@ const createJobUrl = job => job.split('/').join('/job/');
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
-const get = async (url, headers) => {
+const get = async (url, headers, raw = false) => {
   try {
     const result = await axios.get(url, headers);
+    if (raw) return result;
     return result.data;
   } catch (e) {
     return e.response;
