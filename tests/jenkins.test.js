@@ -87,6 +87,9 @@ describe('Jenkins', () => {
     describe('build method', () => {
       it('should work correctly');
     });
+    describe('buildWithParams method', () => {
+      it('should work correctly');
+    });
     describe('toString method', () => {
       it('should return correct string', () => {
         const jenkins = new Jenkins(jenkinsId, jenkinsToken, jenkinsPath);

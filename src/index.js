@@ -26,7 +26,12 @@ class Jenkins {
     return get(...await this._getRequest(job, true, buildNumber));
   }
 
-  async build(job, params = {}) {
+  async build(job) {
+    const [url, headers] = await this._getRequest(job, true, '/build');
+    return post(url, null, headers);
+  }
+
+  async buildWithParams(job, params = {}) {
     const [url, headers] = await this._getRequest(job, true, '/buildWithParameters');
     return post(url, params, headers);
   }

@@ -56,14 +56,22 @@ __Retrieve build information__
 const info = await jenkins.getBuildInfo(jobName, jobId);
 ```
 
-__Trigger build__
+__Trigger build with parameters__
 
 * __jobName__: _`String`_ job full name _(e.g. 'Testing/Frontal/acceptance')_
 * __params__: _`Object`_ _`default={}`_ params to send to job building
 
 ```js
-const build = await jenkins.build(jobName, [params]);
+const build = await jenkins.buildWithParams(jobName, [params]);
 ```
+
+__Trigger build now__
+
+* __jobName__: _`String`_ job full name _(e.g. 'Testing/Frontal/acceptance')_
+
+```js
+const build = await jenkins.build(jobName);
+
 
 __Show progressive console output__
 
