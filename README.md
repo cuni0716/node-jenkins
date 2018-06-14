@@ -71,7 +71,7 @@ __Trigger build now__
 
 ```js
 const build = await jenkins.build(jobName);
-
+```
 
 __Show progressive console output__
 
