@@ -14,7 +14,8 @@ class Jenkins {
     this.crumb = null;
   }
 
-  async info() {
+  async info(job = null) {
+    if (job) return get(...await this._getRequest(`${job}/api/json`));
     return get(...await this._getRequest('/api/json'));
   }
 

@@ -41,7 +41,7 @@ __Retrieve job information__
 * __jobName__: _`String`_ job full name _(e.g. 'Testing/Frontal/acceptance')_
 
 ```js
-const info = await jenkins.getJobInfo(jobName);
+const info = await jenkins.info(jobName);
 ```
 
 
