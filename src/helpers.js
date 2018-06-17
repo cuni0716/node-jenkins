@@ -1,4 +1,7 @@
 const axios = require('axios');
+const xml2js = require('xml2js');
+
+const parser = new xml2js.Parser(xml2js.defaults['0.2']);
 
 
 const createJobUrl = job => job.split('/').join('/job/');
@@ -23,9 +26,16 @@ const post = (url, params, headers) => {
   }
 };
 
+const parseString = str => new Promise((resolve, reject) =>
+  parser.parseString(str, (error, result) => {
+    if (error) return reject(error);
+    return resolve(result);
+  }));
+
 module.exports = {
   createJobUrl,
   sleep,
   get,
   post,
+  parseString,
 };

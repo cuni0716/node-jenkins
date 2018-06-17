@@ -1,7 +1,8 @@
 const qs = require('querystring');
 
+
 const {
-  createJobUrl, sleep, get, post,
+  createJobUrl, sleep, get, post, parseString,
 } = require('./helpers');
 
 
@@ -25,6 +26,11 @@ class Jenkins {
 
   async getBuildInfo(job, buildNumber) {
     return get(...await this._getRequest(job, true, buildNumber));
+  }
+
+  async getJobConfig(job) {
+    const rawConfig = await get(...await this._getRequest(`${job}/config.xml`));
+    return parseString(rawConfig);
   }
 
   async build(job) {

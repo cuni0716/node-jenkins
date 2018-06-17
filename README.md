@@ -44,6 +44,14 @@ __Retrieve job information__
 const info = await jenkins.info(jobName);
 ```
 
+__Retrieve job configuration__
+
+* __jobUrl__: _`String`_ job relative url _(e.g. '/job/Testing/job/Frontal/job/acceptance')_
+
+```js
+const config = await jenkins.getJobConfig(jobUrl);
+```
+
 
 ### Builds
 
