@@ -6,7 +6,7 @@ const parser = new xml2js.Parser(xml2js.defaults['0.2']);
 
 
 const getBaseUrl = (id, token, path) => {
-  const url = Url.parse(path);
+  const url = Url.parse(path.startsWith('http') ? path : `http://${path}`);
   const protocol = url.protocol || 'http:';
   const host = url.hostname || url.pathname;
   const port = url.port ? `:${url.port}` : '';
