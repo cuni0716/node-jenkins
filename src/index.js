@@ -67,7 +67,7 @@ class Jenkins {
   async _getRequest(url, isJob = false, extra = '') {
     if (!url.startsWith('/')) url = `/${url}`;
     if (extra.length && !extra.startsWith('/')) extra = `/${extra}`;
-    const endpoint = `${this.baseUrl}${isJob ? `${createJobUrl(url)}${extra}/api/json` : url}`;
+    const endpoint = `${this.baseUrl}${(isJob || !url.includes('/job/')) ? `${createJobUrl(url)}${extra}/api/json` : url}`;
     const crumb = this.crumb || await this._getCrumb();
     const headers = Object.assign({}, this.headers, { [crumb.crumbRequestField]: crumb.crumb });
     return [`${endpoint}?${qs.stringify(this.urlParams)}`, { headers }];
