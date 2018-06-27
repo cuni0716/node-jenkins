@@ -1,15 +1,16 @@
 const qs = require('querystring');
+const Url = require('url');
 
 
 const {
-  createJobUrl, sleep, get, post, parseString,
+  getBaseUrl, sleep, get, post, parseString,
 } = require('./helpers');
 
 
 class Jenkins {
   constructor(id, token, path, customHeaders = {}) {
     this.token = token;
-    this.baseUrl = `http://${id}:${token}@${path}`;
+    this.baseUrl = getBaseUrl(id, token, path);
     this.urlParams = { token };
     this.headers = Object.assign({}, { Authorization: this.urlParams.token }, customHeaders);
     this.crumb = null;
@@ -21,11 +22,11 @@ class Jenkins {
   }
 
   async getJobInfo(job) {
-    return get(...await this._getRequest(job, true));
+    return get(...await this._getRequest(job));
   }
 
   async getBuildInfo(job, buildNumber) {
-    return get(...await this._getRequest(job, true, buildNumber));
+    return get(...await this._getRequest(job, buildNumber));
   }
 
   async getJobConfig(job) {
@@ -34,12 +35,12 @@ class Jenkins {
   }
 
   async build(job) {
-    const [url, headers] = await this._getRequest(job, true, '/build');
+    const [url, headers] = await this._getRequest(job, '/build');
     return post(url, null, headers);
   }
 
   async buildWithParams(job, params = {}) {
-    const [url, headers] = await this._getRequest(job, true, '/buildWithParameters');
+    const [url, headers] = await this._getRequest(job, '/buildWithParameters');
     return post(url, params, headers);
   }
 
@@ -47,7 +48,7 @@ class Jenkins {
     let isBuilding = true;
     let offset = 0;
     while (isBuilding) {
-      const [url] = await this._getRequest(job, true, `/${id}/logText/progressiveText`);
+      const [url] = await this._getRequest(job, `/${id}/logText/progressiveText`);
       const result = await get(`${url}&start=${offset}`, this.headers, true);
       const log = result.data;
       isBuilding = result.headers['x-more-data'];
@@ -64,12 +65,18 @@ class Jenkins {
     return result;
   }
 
-  async _getRequest(url, isJob = false, extra = '') {
+  async _getRequest(url, extra = '') {
+    const urlObject = Url.parse(url);
+    url = urlObject.pathname;
+
     if (!url.startsWith('/')) url = `/${url}`;
+    if (url.endsWith('/')) url = url.slice(0, -1);
     if (extra.length && !extra.startsWith('/')) extra = `/${extra}`;
-    const endpoint = `${this.baseUrl}${(isJob && !url.includes('/job/')) ? `${createJobUrl(url)}${extra}/api/json` : url}`;
+
+    const endpoint = `${this.baseUrl}${url}${extra}`;
     const crumb = this.crumb || await this._getCrumb();
     const headers = Object.assign({}, this.headers, { [crumb.crumbRequestField]: crumb.crumb });
+
     return [`${endpoint}?${qs.stringify(this.urlParams)}`, { headers }];
   }
 
