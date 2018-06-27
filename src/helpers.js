@@ -1,10 +1,17 @@
+const Url = require('url');
 const axios = require('axios');
 const xml2js = require('xml2js');
 
 const parser = new xml2js.Parser(xml2js.defaults['0.2']);
 
 
-const createJobUrl = job => job.split('/').join('/job/');
+const getBaseUrl = (id, token, path) => {
+  const url = Url.parse(path);
+  const protocol = url.protocol || 'http:';
+  const host = url.hostname || url.pathname;
+  const port = url.port ? `:${url.port}` : '';
+  return `${protocol}//${id}:${token}@${host}${port}`;
+};
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
@@ -33,7 +40,7 @@ const parseString = str => new Promise((resolve, reject) =>
   }));
 
 module.exports = {
-  createJobUrl,
+  getBaseUrl,
   sleep,
   get,
   post,

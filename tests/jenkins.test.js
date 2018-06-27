@@ -70,7 +70,26 @@ describe('Jenkins', () => {
       });
     });
     describe('_getRequest method', () => {
-      it('should works correctly');
+      it('should works correctly', () => {
+        const jenkins = new Jenkins(jenkinsId, jenkinsToken, jenkinsPath);
+        jenkins.crumb = crumbIssuerResponseOk;
+
+        const tests = [
+          { raw: '/api/json', parsed: 'http://jenkins-id:jenkins-token@jenkins.com/api/json?token=jenkins-token' },
+          { raw: '/some/job/api/json', parsed: 'http://jenkins-id:jenkins-token@jenkins.com/some/job/api/json?token=jenkins-token' },
+          { raw: 'http://jenkins.pimpam.io:19080/job/Services/', parsed: 'http://jenkins-id:jenkins-token@jenkins.com/job/Services?token=jenkins-token' },
+          { raw: '/some/job/', parsed: 'http://jenkins-id:jenkins-token@jenkins.com/some/job?token=jenkins-token' },
+          { raw: 'some/job/', parsed: 'http://jenkins-id:jenkins-token@jenkins.com/some/job?token=jenkins-token' },
+          { raw: 'some/job', parsed: 'http://jenkins-id:jenkins-token@jenkins.com/some/job?token=jenkins-token' },
+          { raw: 'some/job/', parsed: 'http://jenkins-id:jenkins-token@jenkins.com/some/job?token=jenkins-token' },
+        ];
+
+        tests.forEach(async (test) => {
+          const [url, headers] = await jenkins._getRequest(test.raw);
+          expect(url).to.eql(test.parsed);
+          expect(headers).to.deep.equal({ headers: { Authorization: 'jenkins-token', 'some-string': 's3cr3t' } });
+        });
+      });
     });
   });
   describe('public methods', () => {
