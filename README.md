@@ -38,7 +38,7 @@ const info = await jenkins.info();
 
 __Retrieve job information__
 
-* __jobName__: _`String`_ job full name _(e.g. 'Testing/Frontal/acceptance')_
+* __jobName__: _`String`_ job url
 
 ```js
 const info = await jenkins.info(jobName);
@@ -46,7 +46,7 @@ const info = await jenkins.info(jobName);
 
 __Retrieve job configuration__
 
-* __jobUrl__: _`String`_ job relative url _(e.g. '/job/Testing/job/Frontal/job/acceptance')_
+* __jobUrl__: _`String`_ job url
 
 ```js
 const config = await jenkins.getJobConfig(jobUrl);
@@ -57,7 +57,7 @@ const config = await jenkins.getJobConfig(jobUrl);
 
 __Retrieve build information__
 
-* __jobName__: _`String`_ job full name _(e.g. 'Testing/Frontal/acceptance')_
+* __jobName__: _`String`_ job url
 * __jobId__: _`Number`_ build id _(e.g. 86)_
 
 ```js
@@ -66,7 +66,7 @@ const info = await jenkins.getBuildInfo(jobName, jobId);
 
 __Trigger build with parameters__
 
-* __jobName__: _`String`_ job full name _(e.g. 'Testing/Frontal/acceptance')_
+* __jobName__: _`String`_ job url
 * __params__: _`Object`_ _`default={}`_ params to send to job building
 
 ```js
@@ -75,7 +75,7 @@ const build = await jenkins.buildWithParams(jobName, [params]);
 
 __Trigger build now__
 
-* __jobName__: _`String`_ job full name _(e.g. 'Testing/Frontal/acceptance')_
+* __jobName__: _`String`_ job url
 
 ```js
 const build = await jenkins.build(jobName);
@@ -83,7 +83,7 @@ const build = await jenkins.build(jobName);
 
 __Show progressive console output__
 
-* __jobName__: _`String`_ job full name _(e.g. 'Testing/Frontal/acceptance')_
+* __jobName__: _`String`_ job url
 * __jobId__: _`Number`_ build id _(e.g. 86)_
 * __interval__: _`Number`_ _`default=100`_ interval to retrieve next output _in milliseconds_
 
