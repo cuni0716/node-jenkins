@@ -40,7 +40,7 @@ class Jenkins {
   }
 
   async buildWithParams(job, params = {}) {
-    const [url, headers] = await this._getRequest(job, '/buildWithParameters');
+    const [url, headers] = await this._getRequest(job, '/buildWithParameters', params);
     return post(url, params, headers);
   }
 
@@ -65,7 +65,7 @@ class Jenkins {
     return result;
   }
 
-  async _getRequest(url, extra = '') {
+  async _getRequest(url, extra = '', params = null) {
     const urlObject = Url.parse(url);
     url = urlObject.pathname;
 
@@ -77,7 +77,7 @@ class Jenkins {
     const crumb = this.crumb || await this._getCrumb();
     const headers = Object.assign({}, this.headers, { [crumb.crumbRequestField]: crumb.crumb });
 
-    return [`${endpoint}?${qs.stringify(this.urlParams)}`, { headers }];
+    return [`${endpoint}?${qs.stringify(this.urlParams)}${params ? `&${qs.stringify(params)}` : ''}`, { headers }];
   }
 
   toString() {
