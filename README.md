@@ -58,7 +58,7 @@ const config = await jenkins.getJobConfig(jobUrl);
 __Retrieve build information__
 
 * __jobName__: _`String`_ job url
-* __jobId__: _`Number`_ build id _(e.g. 86)_
+* __jobId__: _`Number`_ build id
 
 ```js
 const info = await jenkins.getBuildInfo(jobName, jobId);
@@ -84,12 +84,14 @@ const build = await jenkins.build(jobName);
 __Show progressive console output__
 
 * __jobName__: _`String`_ job url
-* __jobId__: _`Number`_ build id _(e.g. 86)_
+* __jobId__: _`Number`_ build id
+* __showLogs__: _`Boolean`_ _`default=true`_ you can execute this function without displaying logs on console, only to waiting for the build finish
 * __interval__: _`Number`_ _`default=100`_ interval to retrieve next output _in milliseconds_
 
 ```js
-await jenkins.progressiveText(jobName, jobId, [interval]);
+await jenkins.progressiveText(jobName, jobId, [showLogs, interval]);
 ```
+
 
 ### Note that in all examples i use `async`/`await`, you can use `.then` instead
 

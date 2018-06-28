@@ -44,17 +44,22 @@ class Jenkins {
     return post(url, params, headers);
   }
 
-  async progressiveText(job, id, interval = 100) {
+  async progressiveText(job, id, showLogs = true, interval = 100) {
     let isBuilding = true;
     let offset = 0;
     while (isBuilding) {
-      const [url] = await this._getRequest(job, `/${id}/logText/progressiveText`);
-      const result = await get(`${url}&start=${offset}`, this.headers, true);
-      const log = result.data;
-      isBuilding = result.headers['x-more-data'];
-      offset = result.headers['x-text-size'];
-      if (log) console.log(log); // eslint-disable-line
-      await sleep(interval);
+      try {
+        const [url] = await this._getRequest(job, `/${id}/logText/progressiveText`);
+        const result = await get(`${url}&start=${offset}`, this.headers, true);
+        if (result.status === 404) throw new Error(404);
+        const { data } = result;
+        isBuilding = result.headers['x-more-data'];
+        offset = result.headers['x-text-size'];
+        if (data && showLogs) console.log(data); // eslint-disable-line
+        await sleep(interval);
+      } catch (e) {
+        if (e.message !== '404') throw new Error(e);
+      }
     }
   }
 
