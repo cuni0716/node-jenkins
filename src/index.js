@@ -47,6 +47,7 @@ class Jenkins {
   async progressiveText(job, id, showLogs = true, interval = 100) {
     let isBuilding = true;
     let offset = 0;
+    let text = '';
     while (isBuilding) {
       try {
         const [url] = await this._getRequest(job, `/${id}/logText/progressiveText`);
@@ -55,12 +56,15 @@ class Jenkins {
         const { data } = result;
         isBuilding = result.headers['x-more-data'];
         offset = result.headers['x-text-size'];
+        text += data;
         if (data && showLogs) console.log(data); // eslint-disable-line
         await sleep(interval);
       } catch (e) {
         if (e.message !== '404') throw new Error(e);
       }
     }
+    const lines = text.split('\n');
+    return lines[lines.length - 2];
   }
 
   async _getCrumb() {

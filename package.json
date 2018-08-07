@@ -1,6 +1,6 @@
 {
   "name": "node-jenkins",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "Easy to use jenkins client",
   "main": "lib/index.js",
   "scripts": {
@@ -13,16 +13,10 @@
     "type": "git",
     "url": "git+ssh://git@github.com/cuni0716/node-jenkins.git"
   },
-  "keywords": [
-    "node",
-    "jenkins",
-    "cli"
-  ],
+  "keywords": [ "node", "jenkins", "cli" ],
   "author": "Ramon Cuni <mail@ramoncuni.com>",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/cuni0716/node-jenkins/issues"
-  },
+  "bugs": { "url": "https://github.com/cuni0716/node-jenkins/issues" },
   "homepage": "https://github.com/cuni0716/node-jenkins#readme",
   "devDependencies": {
     "babel-cli": "^6.26.0",
