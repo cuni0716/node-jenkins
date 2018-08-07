@@ -33,11 +33,10 @@ const post = (url, params, headers) => {
   }
 };
 
-const parseString = str => new Promise((resolve, reject) =>
-  parser.parseString(str, (error, result) => {
-    if (error) return reject(error);
-    return resolve(result);
-  }));
+const parseString = str => new Promise((resolve, reject) => parser.parseString(str, (err, res) => {
+  if (err) return reject(err);
+  return resolve(res);
+}));
 
 module.exports = {
   getBaseUrl,

@@ -13,10 +13,16 @@
     "type": "git",
     "url": "git+ssh://git@github.com/cuni0716/node-jenkins.git"
   },
-  "keywords": [ "node", "jenkins", "cli" ],
+  "keywords": [
+    "node",
+    "jenkins",
+    "cli"
+  ],
   "author": "Ramon Cuni <mail@ramoncuni.com>",
   "license": "MIT",
-  "bugs": { "url": "https://github.com/cuni0716/node-jenkins/issues" },
+  "bugs": {
+    "url": "https://github.com/cuni0716/node-jenkins/issues"
+  },
   "homepage": "https://github.com/cuni0716/node-jenkins#readme",
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -26,11 +32,11 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-minify": "^0.4.3",
     "chai": "^4.1.2",
-    "eslint": "^4.19.1",
-    "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-import": "^2.12.0",
+    "eslint": "^5.3.0",
+    "eslint-config-airbnb-base": "^13.0.0",
+    "eslint-plugin-import": "^2.13.0",
     "mocha": "^5.2.0",
-    "nock": "^9.3.0"
+    "nock": "^9.4.4"
   },
   "dependencies": {
     "axios": "^0.18.0",
