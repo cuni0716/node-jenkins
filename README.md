@@ -11,97 +11,91 @@
 
 ### Create an instance
 
-__Options__
+**Options**
 
-* __jenkinsId__: _`String`_ usually the email you use to log into your jenkins.
-* __jenkinsToken:__ _`String`_ you can find it in your jenkins personal area.
-* __jenkinsPath__: _`String`_ the url you use to acces to your jenkins.
-* __customHeaders:__ _`Object`_ _`default={}`_ with custom headers to be sended in every request (don't worry about the _'Authorization'_ or _'crumb'_ headers, __node-jenkins__ do it for you :wink: ).
+- **jenkinsId**: _`String`_ usually the email you use to log into your jenkins.
+- **jenkinsToken:** _`String`_ you can find it in your jenkins personal area.
+- **jenkinsPath**: _`String`_ the url you use to acces to your jenkins.
+- **customHeaders:** _`Object`_ _`default={}`_ with custom headers to be sended in every request (don't worry about the _'Authorization'_ or _'crumb'_ headers, **node-jenkins** do it for you :wink: ).
 
 ```js
-import Jenkins from 'node-jenkins';
+import Jenkins from "node-jenkins";
 
-const jenkins = new Jenkins(jenkinsId, jenkinsToken, jenkinsPath, [customHeaders]);
+const jenkins = new Jenkins(jenkinsId, jenkinsToken, jenkinsPath, [
+  customHeaders
+]);
 ```
-
 
 ### Info
 
-__Retrieve server information.__
+**Retrieve server information.**
 
 ```js
 const info = await jenkins.info();
 ```
 
-
 ### Jobs
 
-__Retrieve job information__
+**Retrieve job information**
 
-* __jobName__: _`String`_ job url
+- **jobName**: _`String`_ job url
 
 ```js
 const info = await jenkins.info(jobName);
 ```
 
-__Retrieve job configuration__
+**Retrieve job configuration**
 
-* __jobUrl__: _`String`_ job url
+- **jobUrl**: _`String`_ job url
 
 ```js
 const config = await jenkins.getJobConfig(jobUrl);
 ```
 
-
 ### Builds
 
-__Retrieve build information__
+**Retrieve build information**
 
-* __jobName__: _`String`_ job url
-* __jobId__: _`Number`_ build id
+- **jobName**: _`String`_ job url
+- **jobId**: _`Number`_ build id
 
 ```js
 const info = await jenkins.getBuildInfo(jobName, jobId);
 ```
 
-__Trigger build with parameters__
+**Trigger build with parameters**
 
-* __jobName__: _`String`_ job url
-* __params__: _`Object`_ _`default={}`_ params to send to job building
+- **jobName**: _`String`_ job url
+- **params**: _`Object`_ _`default={}`_ params to send to job building
 
 ```js
 const build = await jenkins.buildWithParams(jobName, [params]);
 ```
 
-__Trigger build now__
+**Trigger build now**
 
-* __jobName__: _`String`_ job url
+- **jobName**: _`String`_ job url
 
 ```js
 const build = await jenkins.build(jobName);
 ```
 
-__Show progressive console output__
+**Show progressive console output**
 
-* __jobName__: _`String`_ job url
-* __jobId__: _`Number`_ build id
-* __showLogs__: _`Boolean`_ _`default=true`_ you can execute this function without displaying logs on console, only to waiting for the build finish
-* __interval__: _`Number`_ _`default=100`_ interval to retrieve next output _in milliseconds_
+- **jobName**: _`String`_ job url
+- **jobId**: _`Number`_ build id
+- **showLogs**: _`Boolean`_ _`default=true`_ you can execute this function without displaying logs on console, only to waiting for the build finish
+- **interval**: _`Number`_ _`default=100`_ interval to retrieve next output _in milliseconds_
 
 ```js
 await jenkins.progressiveText(jobName, jobId, [showLogs, interval]);
 ```
 
-
 ### Note that in all examples i use `async`/`await`, you can use `.then` instead
-
-## More functions comming soon
-
 
 ### License
 
 This work is licensed under the MIT License (see the LICENSE file).
-
 
 [travis-image]: https://travis-ci.org/cuni0716/node-jenkins.svg?branch=master
 [travis-url]: https://travis-ci.org/cuni0716/node-jenkins
